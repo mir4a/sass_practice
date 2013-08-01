@@ -1,0 +1,112 @@
+$green_dark: #162b24;
+$green: #608757;
+$light_green: #f5f8e2;
+$gray: #525146;
+
+$number: 36;
+
+@mixin loop($id, $iterator, $mltp, $spacer, $wi, $hi, $iterator_add: 3, $max_number: $number) {
+  $i1: 0;
+  @while $iterator <= $max_number {
+    #{$id}#{$iterator} {
+      left: $wi * $i1 + $spacer;
+      top: $hi * $mltp;
+    }
+    $iterator: $iterator + $iterator_add;
+    $i1: $i1 + 1;
+  }
+}
+
+[id] {
+  position: absolute;
+}
+
+body {
+  color: $light_green;
+  background: $green_dark;
+}
+
+@mixin rec($container_width) {
+
+  $radius: 12px;
+
+  $wide_button_width: $container_width/4;
+  $short_button_width: $wide_button_width/2;
+
+  $rows: 3;
+  $in_row: $number/$rows;
+  $cell_width: $container_width / $in_row;
+  $quater_cell_width: $cell_width / 4;
+
+  $container_height: $cell_width * $rows;
+
+  .wrap_numbers {
+    position: relative;
+    width: $container_width;
+    height: $container_height;
+    margin: 20px auto;
+  }
+
+  .acceptors {
+    position: relative;
+    width: $container_width;
+    height: $container_height;
+    margin: 50px auto 0;
+  }
+
+  .acceptornew {
+    color: $green_dark;
+    text-align: center;
+    width: $cell_width - 4;
+    height: $cell_width - 4;
+    line-height: $cell_width;
+    border-radius: $radius;
+    background: $light_green;
+    margin: 2px;
+    box-shadow: 0 0 5px transparentize($green_dark, 0.3);
+    &:nth-child(even) {
+      color: $light_green;
+      background: $green;
+    }
+  }
+
+  @include loop('#n', 1, 2, 0, $cell_width, $cell_width);
+  @include loop('#n', 2, 1, 0, $cell_width, $cell_width);
+  @include loop('#n', 3, 0, 0, $cell_width, $cell_width);
+
+}
+
+@media (min-width: 320px) and (max-width: 380px) {
+  body {
+    font-size: 12px;
+  }
+  @include rec(310px);
+}
+
+@media (min-width: 381px) and (max-width: 420px) {
+  body {
+    font-size: 12px;
+  }
+  @include rec(360px);
+}
+
+@media (min-width: 421px) and (max-width: 639px) {
+  body {
+    font-size: 16px;
+  }
+  @include rec(400px);
+}
+
+@media (min-width: 640px) and (max-width: 1000px) {
+  body {
+    font-size: 20px;
+  }
+  @include rec(600px);
+}
+
+@media (min-width: 1001px) {
+  body {
+    font-size: 24px;
+  }
+  @include rec(900px);
+}
